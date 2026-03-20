@@ -1,25 +1,30 @@
 import React from "react";
-import { SafeAreaView, View, type ViewStyle } from "react-native";
-import { OneDexText } from "@/components/content/OneDexText";
+import { ScrollView, type ViewStyle } from "react-native";
+import { Markets } from "@/components/panel/Markets";
+import { TradeHeader } from "@/components/panel/TradeHeader";
+import { CategoryBar, type ActiveCategory } from "@/components/panel/CategoryBar";
+import { useWatchlistSymbols } from "@/hooks/useWatchlistSymbols";
+import { getTradeCategory, setTradeCategory, subscribeTradeCategory, type TradeCategory } from "@/services/trade/tradeCategoryStore";
 
 export default function Trade() {
-  const safeAreaStyle: ViewStyle = {
-    flex: 1,
-    backgroundColor: "#F8FAFC",
-  };
+  const watchlistSymbols = useWatchlistSymbols();
+  const [active, setActive] = React.useState<ActiveCategory>(getTradeCategory() as ActiveCategory);
 
-  const contentStyle: ViewStyle = {
-    paddingTop: 112,
-    paddingHorizontal: 24,
-  };
+  React.useEffect(() => {
+    return subscribeTradeCategory((next: TradeCategory) => {
+      setActive(next as ActiveCategory)
+    })
+  }, [])
 
-  return (
-    <SafeAreaView style={safeAreaStyle}>
-      <View style={contentStyle}>
-        <OneDexText text="Trade" fontSize={24} fontWeight="800" />
-      </View>
-    </SafeAreaView>
-  );
+  return <>
+    <TradeHeader />
+    <ScrollView contentContainerStyle={{ paddingBottom: 16 }}>
+      <CategoryBar active={active} onChange={(next) => setTradeCategory(next as TradeCategory)} />
+      <Markets
+        symbolFilter={active === "Watchlist" ? watchlistSymbols : undefined}
+      />
+    </ScrollView>
+  </>
 }
 
 

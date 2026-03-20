@@ -27,7 +27,7 @@ export function BottomBar({ activeTab, setActiveTab }: BottomBarProps) {
     justifyContent: "space-between",
   };
 
-  return (
+  return <>
     <View style={panelStyle}>
       <View style={containerStyle}>
         <BottomBarItem label="Home" icon="home-outline" active={activeTab === "home"} onPress={() => setActiveTab("home")} />
@@ -36,5 +36,5 @@ export function BottomBar({ activeTab, setActiveTab }: BottomBarProps) {
         <BottomBarItem label="Wallet" icon="wallet-outline" active={activeTab === "wallet"} onPress={() => setActiveTab("wallet")} />
       </View>
     </View>
-  );
+  </>
 }

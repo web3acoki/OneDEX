@@ -6,7 +6,6 @@ import { OneDexText } from "@/components/content/OneDexText";
 
 export function Portfolio() {
   const containerStyle: ViewStyle = {
-    height: 173,
     paddingHorizontal: 24,
   };
 
@@ -48,8 +47,9 @@ export function Portfolio() {
     marginRight: 12,
   };
 
-  return (
+  return <>
     <View style={containerStyle}>
+
       <View style={titleRowStyle}>
         <OneDexText text="Portfolio Value" fontSize={16} />
         <View style={titleIconStyle}>
@@ -58,13 +58,13 @@ export function Portfolio() {
       </View>
 
       <View style={valueRowStyle}>
-        <OneDexText text="$1,240" fontSize={48} fontWeight="800" lineHeight={48} />
-        <OneDexText text=".50" fontSize={30} fontWeight="800" color="#90A1B9" lineHeight={36} />
+        <OneDexText text="$0" fontSize={48} fontWeight="800" lineHeight={48} />
+        <OneDexText text=".00" fontSize={30} fontWeight="800" color="#90A1B9" lineHeight={36} />
       </View>
 
       <View style={changeRowStyle}>
         <Ionicons name="trending-up" size={12} color="#00BC7D" />
-        <OneDexText text="+12.4%" color="#00BC7D" marginLeft={6} />
+        <OneDexText text="+0%" color="#00BC7D" marginLeft={6} />
         <OneDexText text="Today" color="#62748E" marginLeft={6} />
       </View>
 
@@ -76,6 +76,7 @@ export function Portfolio() {
           <OneDexButton label="Withdraw" backgroundColor="#FFFFFF" borderColor="#E2E8F0" labelColor="#0F172B" />
         </View>
       </View>
+
     </View>
-  );
+  </>
 }

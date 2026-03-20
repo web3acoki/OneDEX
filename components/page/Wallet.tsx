@@ -1,25 +1,22 @@
-import React from "react";
-import { SafeAreaView, View, type ViewStyle } from "react-native";
-import { OneDexText } from "@/components/content/OneDexText";
+import React from "react"
+import { ScrollView, View, type ViewStyle } from "react-native"
+import { Portfolio } from "@/components/panel/Portfolio"
+import { WalletHeader } from "@/components/panel/WalletHeader"
 
 export default function Wallet() {
-  const safeAreaStyle: ViewStyle = {
-    flex: 1,
-    backgroundColor: "#F8FAFC",
-  };
+  // Keep wallet page clean: logout is handled in the Login screen.
 
-  const contentStyle: ViewStyle = {
-    paddingTop: 112,
+  const spacerStyle: ViewStyle = {
+    marginTop: 24,
     paddingHorizontal: 24,
-  };
+    height: 48,
+  }
 
-  return (
-    <SafeAreaView style={safeAreaStyle}>
-      <View style={contentStyle}>
-        <OneDexText text="Wallet" fontSize={24} fontWeight="800" />
-      </View>
-    </SafeAreaView>
-  );
+  return <>
+    <WalletHeader />
+    <ScrollView contentContainerStyle={{ paddingBottom: 16 }}>
+      <Portfolio />
+      <View style={spacerStyle} />
+    </ScrollView>
+  </>
 }
-
-

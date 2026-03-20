@@ -1,25 +1,14 @@
 import React from "react";
-import { SafeAreaView, View, type ViewStyle } from "react-native";
-import { OneDexText } from "@/components/content/OneDexText";
+import { ScrollView, View, type ViewStyle } from "react-native";
+import { StrategyHeader } from "@/components/panel/StrategyHeader";
 
 export default function Strategy() {
-  const safeAreaStyle: ViewStyle = {
-    flex: 1,
-    backgroundColor: "#F8FAFC",
-  };
-
-  const contentStyle: ViewStyle = {
-    paddingTop: 112,
-    paddingHorizontal: 24,
-  };
-
-  return (
-    <SafeAreaView style={safeAreaStyle}>
-      <View style={contentStyle}>
-        <OneDexText text="Strategy" fontSize={24} fontWeight="800" />
-      </View>
-    </SafeAreaView>
-  );
+  return <>
+    <StrategyHeader />
+    <ScrollView contentContainerStyle={{ paddingBottom: 16 }}>
+      <View style={{ height: 1 }} />
+    </ScrollView>
+  </>
 }
 
 

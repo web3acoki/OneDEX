@@ -25,12 +25,12 @@ export function BottomBarItem({ label, icon, active, onPress }: BottomBarItemPro
     justifyContent: "center",
   };
 
-  return (
+  return <>
     <TouchableOpacity style={itemStyle} activeOpacity={0.8} onPress={onPress}>
       <View style={iconStyle}>
         <Ionicons name={icon} size={24} color={active ? "#0F172B" : "#90A1B9"} />
       </View>
       <OneDexText text={label} fontSize={10} fontWeight={active ? "500" : undefined} color={active ? "#0F172B" : "#90A1B9"} />
     </TouchableOpacity>
-  );
+  </>
 }
