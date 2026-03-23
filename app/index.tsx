@@ -9,7 +9,8 @@ import Strategy from "@/components/page/Strategy";
 import Wallet from "@/components/page/Wallet";
 import { DebugBar } from "@/components/panel/DebugBar";
 import { setTradeCategory } from "@/services/trade/tradeCategoryStore";
-import MarketDetail from "@/components/page/MarketDetail";
+import Market from "@/components/page/Market";
+import Search from "@/components/page/Search";
 import { getSelectedMarketSymbol, clearSelectedMarketSymbol, subscribeSelectedMarketSymbol, type SelectedMarketSymbol } from "@/services/trade/selectedMarketStore";
 import { getAuthScreen, subscribeAuthScreen, clearAuthScreen, type AuthScreen } from "@/services/auth/authScreenStore";
 
@@ -18,6 +19,7 @@ export default function Index() {
   const [activeTab, setActiveTab] = React.useState<"home" | "trade" | "strategy" | "wallet">("home");
   const [selectedSymbol, setSelectedSymbol] = React.useState<SelectedMarketSymbol>(getSelectedMarketSymbol());
   const [authScreen, setAuthScreen] = React.useState<AuthScreen>(getAuthScreen());
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const jumpToTradeWatchlist = () => {
     setTradeCategory("Watchlist");
     setActiveTab("trade");
@@ -51,12 +53,19 @@ export default function Index() {
 
   if (selectedSymbol) {
     return <>
-      <MarketDetail symbol={selectedSymbol} onBack={clearSelectedMarketSymbol} />
+      <Market symbol={selectedSymbol} onBack={clearSelectedMarketSymbol} onPressSearch={() => setIsSearchOpen(true)} />
+    </>
+  }
+
+  if (isSearchOpen) {
+    return <>
+      <Search onBack={() => setIsSearchOpen(false)} />
+      <DebugBar />
     </>
   }
 
   return <>
-      {activeTab === "home" ? <Home onJumpToTradeWatchlist={jumpToTradeWatchlist} /> : activeTab === "trade" ? <Trade /> : activeTab === "strategy" ? <Strategy /> : <Wallet />}
+      {activeTab === "home" ? <Home onJumpToTradeWatchlist={jumpToTradeWatchlist} onPressSearch={() => setIsSearchOpen(true)} /> : activeTab === "trade" ? <Trade onPressSearch={() => setIsSearchOpen(true)} /> : activeTab === "strategy" ? <Strategy /> : <Wallet />}
       <DebugBar />
       <BottomBar activeTab={activeTab} setActiveTab={setActiveTab} />
   </>

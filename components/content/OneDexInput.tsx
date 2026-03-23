@@ -5,7 +5,7 @@ type OneDexInputProps = {
   value: string
   onChangeText: (next: string) => void
   placeholder: string
-  inputMode: "email" | "numeric"
+  inputMode: "email" | "numeric" | "text"
   containerStyle?: ViewStyle
   children?: React.ReactNode
 }

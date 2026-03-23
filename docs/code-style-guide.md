@@ -7,6 +7,8 @@ All code in this project MUST:
 - **Page structure**: no default top header; elements under `components/page` should reuse scripts from `components/panel`.
 - **Header alignment**: in `components/panel/*Header.tsx` use normal layout (no `position: "absolute"`), and keep `height: 104` with `alignItems: "flex-start"` + `paddingTop: 48`.
 - **Self-contained panel layout**: outer spacing and sizing that belong to a panel live inside that panel (e.g. `Brand` top padding); do not wrap a panel in `page` with a style-only `View`.
+- **Panel positioning**: prefer `marginTop` for layout positioning in `components/panel`; avoid `top` / `bottom` whenever possible.
+- **No absolute positioning**: do not use `position: "absolute"` for layout implementation (especially in `page` / `panel`); prefer normal document flow and spacing.
 - **Structure components**: use `components/panel` for layout containers (panels) and `components/content` for reusable content elements.
 - **Apply Figma**: map sizes/spacing outside-in — panel → container → content.
 - **One-line code when clear**: when a method or expression can be written clearly in one line, avoid splitting it unnecessarily; keep main renders compact yet readable.

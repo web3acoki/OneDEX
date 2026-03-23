@@ -1,9 +1,17 @@
 import React from "react"
-import { View, type ViewStyle } from "react-native"
+import { Pressable, View, type ViewStyle } from "react-native"
 import { OneDexText } from "@/components/content/OneDexText"
-import { HeaderIconButton } from "@/components/content/HeaderIconButton"
+import { HeaderButton } from "@/components/content/HeaderButton"
+type TradeMainTab = "Markets" | "Positions"
 
-export function TradeHeader() {
+type TradeHeaderProps = {
+  onPressSearch: () => void
+  active: TradeMainTab
+  onPressMarkets: () => void
+  onPressPositions: () => void
+}
+
+export function TradeHeader({ onPressSearch, active, onPressMarkets, onPressPositions }: TradeHeaderProps) {
   const headerStyle: ViewStyle = {
     height: 104,
     flexDirection: "row",
@@ -43,16 +51,20 @@ export function TradeHeader() {
     <View style={headerStyle}>
       <View style={leftGroupStyle}>
         <View style={marketsBtnStyle}>
-          <OneDexText text="Markets" fontSize={24} fontWeight="700" color="#0F172B" lineHeight={32} />
+          <Pressable onPress={onPressMarkets}>
+            <OneDexText text="Markets" fontSize={24} fontWeight="700" color={active === "Positions" ? "#90A1B9" : "#0F172B"} lineHeight={32} />
+          </Pressable>
         </View>
         <View style={positionsBtnStyle}>
           <View style={positionsInnerStyle}>
-            <OneDexText text="Positions" fontSize={24} fontWeight="700" color="#90A1B9" lineHeight={32} />
+            <Pressable onPress={onPressPositions}>
+              <OneDexText text="Positions" fontSize={24} fontWeight="700" color={active === "Positions" ? "#0F172B" : "#90A1B9"} lineHeight={32} />
+            </Pressable>
           </View>
         </View>
       </View>
 
-      <HeaderIconButton icon="search" size={20} color="#62748E" />
+      <HeaderButton name="search" onPress={onPressSearch} />
     </View>
   </>
 }

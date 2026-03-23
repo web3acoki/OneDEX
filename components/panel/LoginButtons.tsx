@@ -6,7 +6,7 @@ import { useLoginMode } from "@/components/page/Login"
 export function LoginButtons() {
   const { setMode } = useLoginMode()
   const buttonsWrapStyle: ViewStyle = {
-    top: 152,
+    marginTop: 152,
     alignItems: "center",
     alignSelf: "center",
   }

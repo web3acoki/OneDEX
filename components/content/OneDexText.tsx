@@ -9,10 +9,9 @@ type OneDexTextProps = {
   marginLeft?: number;
   marginBottom?: number;
   lineHeight?: number;
-  textAlign?: TextStyle["textAlign"];
 };
 
-export function OneDexText({ text, fontSize, fontWeight, color, marginLeft, marginBottom, lineHeight, textAlign }: OneDexTextProps) {
+export function OneDexText({ text, fontSize, fontWeight, color, marginLeft, marginBottom, lineHeight }: OneDexTextProps) {
   const style: TextStyle = {
     fontSize: fontSize ?? 14,
     fontWeight: fontWeight ?? "700",
@@ -20,7 +19,6 @@ export function OneDexText({ text, fontSize, fontWeight, color, marginLeft, marg
     marginLeft,
     marginBottom,
     lineHeight,
-    textAlign,
   };
 
   return <Text style={style}>{text}</Text>

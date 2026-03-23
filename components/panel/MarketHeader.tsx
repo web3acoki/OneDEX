@@ -1,28 +1,15 @@
 import React from "react"
-import { Ionicons } from "@expo/vector-icons"
-import { TouchableOpacity, View, type ViewStyle } from "react-native"
+import { View, type ViewStyle } from "react-native"
 import { loadWatchlistSymbols, saveWatchlistSymbols, DEFAULT_WATCHLIST_SYMBOLS } from "@/services/watchlist"
+import { HeaderButton } from "@/components/content/HeaderButton"
 
-type MarketDetailHeaderProps = {
+type MarketHeaderProps = {
   symbol: string
   onBack: () => void
+  onPressSearch: () => void
 }
 
-const iconButtonStyle: ViewStyle = {
-  width: 36,
-  height: 36,
-  borderRadius: 18,
-  backgroundColor: "#FFFFFF",
-  alignItems: "center",
-  justifyContent: "center",
-  shadowColor: "#000000",
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.1,
-  shadowRadius: 3,
-  elevation: 2,
-}
-
-export function MarketDetailHeader({ symbol, onBack }: MarketDetailHeaderProps) {
+export function MarketHeader({ symbol, onBack, onPressSearch }: MarketHeaderProps) {
   const [symbols, setSymbols] = React.useState<string[]>([...DEFAULT_WATCHLIST_SYMBOLS])
 
   React.useEffect(() => {
@@ -62,22 +49,10 @@ export function MarketDetailHeader({ symbol, onBack }: MarketDetailHeaderProps) 
 
   return <>
     <View style={headerStyle}>
-      <TouchableOpacity style={iconButtonStyle} activeOpacity={0.8} onPress={onBack}>
-        <Ionicons
-          name="chevron-up"
-          size={20}
-          color="#62748E"
-          style={{ transform: [{ rotate: "270deg" }] }}
-        />
-      </TouchableOpacity>
-
+      <HeaderButton name="chevron-back" onPress={onBack} />
       <View style={rightGroupStyle}>
-        <TouchableOpacity style={iconButtonStyle} activeOpacity={0.8} onPress={() => void toggleFavorite()}>
-          <Ionicons name="star" size={20} color={favoriteColor} />
-        </TouchableOpacity>
-        <TouchableOpacity style={iconButtonStyle} activeOpacity={0.8}>
-          <Ionicons name="search" size={20} color="#62748E" />
-        </TouchableOpacity>
+        <HeaderButton name="star" color={favoriteColor} onPress={() => void toggleFavorite()} />
+        <HeaderButton name="search" onPress={onPressSearch} />
       </View>
     </View>
   </>

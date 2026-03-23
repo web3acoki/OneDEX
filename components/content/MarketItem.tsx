@@ -13,6 +13,10 @@ const FULL_NAMES: Record<string, string> = {
   ETH: "Ethereum",
 }
 
+export function getMarketFullName(symbol: string): string {
+  return FULL_NAMES[symbol] ?? `${symbol} perpetual`
+}
+
 function formatUsd(price: string) {
   const n = Number(price)
   return `$${n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
@@ -21,12 +25,10 @@ function formatUsd(price: string) {
 export function MarketItem({ item }: MarketItemProps) {
   const avatarLetter = item.symbol.slice(0, 1).toUpperCase()
   const title = item.symbol
-  const subtitle = FULL_NAMES[item.symbol] ?? `${item.symbol} perpetual`
+  const subtitle = getMarketFullName(item.symbol)
   const priceText = formatUsd(item.price)
-
-  const changeSign = item.changePct >= 0 ? "+" : ""
-  const changeText = `${changeSign}${item.changePct.toFixed(2)}%`
-  const changeColor = item.changePct >= 0 ? "#00BC7D" : "#EF4444"
+  const secondaryText = `${item.changePct >= 0 ? "+" : ""}${item.changePct.toFixed(2)}%`
+  const secondaryColor = item.changePct >= 0 ? "#00BC7D" : "#EF4444"
 
   const rowStyle: ViewStyle = {
     flexDirection: "row",
@@ -87,7 +89,7 @@ export function MarketItem({ item }: MarketItemProps) {
       <View style={rightColStyle}>
         <OneDexText text={priceText} fontSize={16} lineHeight={24} />
         <View style={changeWrapStyle}>
-          <OneDexText text={changeText} fontSize={12} color={changeColor} lineHeight={16} />
+          <OneDexText text={secondaryText} fontSize={12} color={secondaryColor} lineHeight={16} />
         </View>
       </View>
     </View>

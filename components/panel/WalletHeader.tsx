@@ -1,11 +1,19 @@
 import React from "react"
+import { useEmbeddedEthereumWallet } from "@privy-io/expo"
+import * as Clipboard from "expo-clipboard"
 import { Ionicons } from "@expo/vector-icons"
-import { TouchableOpacity, View, type ViewStyle } from "react-native"
+import { Pressable, View, type ViewStyle } from "react-native"
 import { OneDexText } from "@/components/content/OneDexText"
-import { HeaderIconButton } from "@/components/content/HeaderIconButton"
+import { HeaderButton } from "@/components/content/HeaderButton"
 import { showLoginScreen } from "@/services/auth/authScreenStore"
 
 export function WalletHeader() {
+  const { wallets } = useEmbeddedEthereumWallet()
+  const [copied, setCopied] = React.useState(false)
+
+  const walletAddress = wallets[0]?.address ?? ""
+  const shortAddress = walletAddress ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : "Connect Wallet"
+
   const headerStyle: ViewStyle = {
     height: 104,
     flexDirection: "row",
@@ -21,15 +29,6 @@ export function WalletHeader() {
     gap: 8,
   }
 
-  const chainBadgeStyle: ViewStyle = {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: "#4F39F6",
-    alignItems: "center",
-    justifyContent: "center",
-  }
-
   const addressRowStyle: ViewStyle = {
     flexDirection: "row",
     alignItems: "center",
@@ -42,18 +41,24 @@ export function WalletHeader() {
   return <>
     <View style={headerStyle}>
       <View style={leftGroupStyle}>
-        <TouchableOpacity style={chainBadgeStyle} activeOpacity={0.9} onPress={showLoginScreen}>
-          <OneDexText text="0x" fontSize={12} fontWeight="700" color="#FFFFFF" lineHeight={16} />
-        </TouchableOpacity>
+        <HeaderButton name="person" onPress={showLoginScreen} />
         <View style={addressRowStyle}>
-          <OneDexText text="0x71...39A2" fontSize={14} fontWeight="700" color="#0F172B" lineHeight={20} />
-          <View style={copyIconWrapStyle}>
+          <OneDexText text={shortAddress} fontSize={14} lineHeight={20} />
+          <Pressable
+            style={copyIconWrapStyle}
+            onPress={async () => {
+              await Clipboard.setStringAsync(walletAddress)
+              setCopied(true)
+              setTimeout(() => setCopied(false), 1200)
+            }}
+          >
             <Ionicons name="copy-outline" size={14} color="#90A1B9" />
-          </View>
+          </Pressable>
+          {copied ? <OneDexText text="Copied" fontSize={12} color="#00BC7D" marginLeft={6} /> : null}
         </View>
       </View>
 
-      <HeaderIconButton icon="settings-outline" color="#45556C" />
+      <HeaderButton name="settings-outline" onPress={showLoginScreen} />
     </View>
   </>
 }

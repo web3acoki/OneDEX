@@ -1,23 +1,9 @@
 import React from "react"
-import { Ionicons } from "@expo/vector-icons"
-import { TouchableOpacity, View, type ViewStyle } from "react-native"
+import { View, type ViewStyle } from "react-native"
+import { HeaderButton } from "@/components/content/HeaderButton"
 
 type MenuHeaderProps = {
   onBack: () => void
-}
-
-const iconButtonStyle: ViewStyle = {
-  width: 36,
-  height: 36,
-  borderRadius: 18,
-  backgroundColor: "#FFFFFF",
-  alignItems: "center",
-  justifyContent: "center",
-  shadowColor: "#000000",
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.1,
-  shadowRadius: 3,
-  elevation: 2,
 }
 
 export function MenuHeader({ onBack }: MenuHeaderProps) {
@@ -37,14 +23,7 @@ export function MenuHeader({ onBack }: MenuHeaderProps) {
 
   return <>
     <View style={headerStyle}>
-      <TouchableOpacity style={iconButtonStyle} activeOpacity={0.8} onPress={onBack}>
-        <Ionicons
-          name="chevron-up"
-          size={20}
-          color="#62748E"
-          style={{ transform: [{ rotate: "270deg" }] }}
-        />
-      </TouchableOpacity>
+      <HeaderButton name="chevron-back" onPress={onBack} />
       <View style={rightSpacerStyle} />
     </View>
   </>

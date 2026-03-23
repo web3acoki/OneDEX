@@ -1,5 +1,4 @@
-const HYPERLIQUID_WS_URL = "wss://api.hyperliquid.xyz/ws"
-const HYPERLIQUID_INFO_URL = "https://api.hyperliquid.xyz/info"
+import { getHyperliquidInfoUrl, getHyperliquidWsUrl } from "./urls"
 
 type HyperliquidMeta = {
   universe?: Array<{ name?: string }>
@@ -33,6 +32,7 @@ type Listener = { onUpdate: ActiveMidsCallback; onError: ErrorCallback }
 
 let ws: WebSocket | null = null
 let started = false
+let isAllMarketsMode = false
 
 let targetSymbols: string[] = []
 let prevDayPxBySymbol: Record<string, string> = {}
@@ -48,12 +48,12 @@ function computeChangePct(price: string, prevDayPx: string): number {
   return ((p - v) / v) * 100
 }
 
-async function fetchTopMarkets(limit = 20): Promise<{
+async function fetchMarkets(limit?: number): Promise<{
   symbols: string[]
   prevBySymbol: Record<string, string>
   initialPriceBySymbol: Record<string, string>
 }> {
-  const response = await fetch(HYPERLIQUID_INFO_URL, {
+  const response = await fetch(getHyperliquidInfoUrl(), {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ type: "metaAndAssetCtxs" }),
@@ -65,7 +65,8 @@ async function fetchTopMarkets(limit = 20): Promise<{
   const universe = data?.[0]?.universe ?? []
   const ctxs = data?.[1] ?? []
 
-  const symbols = universe.slice(0, limit).map((item) => item?.name).filter((name): name is string => !!name)
+  const selected = typeof limit === "number" ? universe.slice(0, limit) : universe
+  const symbols = selected.map((item) => item?.name).filter((name): name is string => !!name)
 
   const prevBySymbol: Record<string, string> = {}
   const initialPriceBySymbol: Record<string, string> = {}
@@ -91,11 +92,41 @@ function emitError(message: string) {
   listeners.forEach((listener) => listener.onError(message))
 }
 
-function ensureStarted() {
-  if (started) return
-  started = true
+function ensureStarted(limit?: number) {
+  const nextAllMarketsMode = typeof limit === "undefined"
 
-  void fetchTopMarkets(20)
+  if (started && !(nextAllMarketsMode && !isAllMarketsMode)) return
+
+  // Upgrade path: if service started in top20 mode and Search requests all markets,
+  // refetch the full universe without recreating websocket connection.
+  if (started && nextAllMarketsMode && !isAllMarketsMode) {
+    isAllMarketsMode = true
+
+    void fetchMarkets(undefined)
+      .then(({ symbols, prevBySymbol, initialPriceBySymbol }) => {
+        targetSymbols = symbols
+        prevDayPxBySymbol = prevBySymbol
+        latestPriceBySymbol = { ...latestPriceBySymbol, ...initialPriceBySymbol }
+
+        const nextQuotes: MarketQuote[] = targetSymbols.map((symbol) => ({
+          symbol,
+          price: latestPriceBySymbol[symbol] ?? "-",
+          changePct: computeChangePct(latestPriceBySymbol[symbol] ?? "0", prevDayPxBySymbol[symbol] ?? "0"),
+        }))
+
+        emitUpdate(nextQuotes)
+      })
+      .catch((error) => {
+        const message = error instanceof Error ? error.message : "Unknown error"
+        emitError(`Hyperliquid list upgrade failed: ${message}`)
+      })
+    return
+  }
+
+  started = true
+  isAllMarketsMode = nextAllMarketsMode
+
+  void fetchMarkets(limit)
     .then(({ symbols, prevBySymbol, initialPriceBySymbol }) => {
       targetSymbols = symbols
       prevDayPxBySymbol = prevBySymbol
@@ -114,7 +145,7 @@ function ensureStarted() {
       emitError(`Hyperliquid list failed: ${message}`)
     })
 
-  ws = new WebSocket(HYPERLIQUID_WS_URL)
+  ws = new WebSocket(getHyperliquidWsUrl())
   ws.onopen = () => {
     ws?.send(JSON.stringify({ method: "subscribe", subscription: { type: "allMids" } }))
   }
@@ -148,8 +179,8 @@ function ensureStarted() {
   ws.onclose = () => emitError("Hyperliquid websocket closed")
 }
 
-export function subscribeTop20Markets(onUpdate: ActiveMidsCallback, onError: ErrorCallback): () => void {
-  ensureStarted()
+function subscribeMarkets(limit: number | undefined, onUpdate: ActiveMidsCallback, onError: ErrorCallback): () => void {
+  ensureStarted(limit)
 
   const listenerId = nextListenerId
   nextListenerId += 1
@@ -159,5 +190,28 @@ export function subscribeTop20Markets(onUpdate: ActiveMidsCallback, onError: Err
   return () => {
     listeners.delete(listenerId)
   }
+}
+
+export function subscribeTop20Markets(onUpdate: ActiveMidsCallback, onError: ErrorCallback): () => void {
+  return subscribeMarkets(20, onUpdate, onError)
+}
+
+export function subscribeAllMarkets(onUpdate: ActiveMidsCallback, onError: ErrorCallback): () => void {
+  return subscribeMarkets(undefined, onUpdate, onError)
+}
+
+export function getMarketQuotes(): MarketQuote[] {
+  return currentQuotes
+}
+
+export function resetMarketFeed() {
+  ws?.close()
+  ws = null
+  started = false
+  isAllMarketsMode = false
+  targetSymbols = []
+  prevDayPxBySymbol = {}
+  latestPriceBySymbol = {}
+  currentQuotes = []
 }
 

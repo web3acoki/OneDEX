@@ -3,8 +3,17 @@ import { Ionicons } from "@expo/vector-icons";
 import { View, type ViewStyle } from "react-native";
 import { OneDexButton } from "@/components/content/OneDexButton";
 import { OneDexText } from "@/components/content/OneDexText";
+import { useEmbeddedEthereumWallet } from "@privy-io/expo";
+import { fetchPortfolioView, getPortfolioView } from "@/services/hyperliquid";
 
 export function Portfolio() {
+  const { wallets } = useEmbeddedEthereumWallet();
+  const walletAddress = wallets[0]?.address ?? "";
+  const [view, setView] = React.useState(() => getPortfolioView(walletAddress));
+  React.useEffect(() => { if (!walletAddress) return; void fetchPortfolioView(walletAddress).then((next) => setView((prev) => prev.portfolioValue === next.portfolioValue && prev.pnlPercent === next.pnlPercent ? prev : next)); }, [walletAddress]);
+  const [intPart, fractionPart = "00"] = view.portfolioValue.toFixed(2).split(".");
+  const pnlIsPositive = view.pnlPercent >= 0;
+
   const containerStyle: ViewStyle = {
     paddingHorizontal: 24,
   };
@@ -58,13 +67,13 @@ export function Portfolio() {
       </View>
 
       <View style={valueRowStyle}>
-        <OneDexText text="$0" fontSize={48} fontWeight="800" lineHeight={48} />
-        <OneDexText text=".00" fontSize={30} fontWeight="800" color="#90A1B9" lineHeight={36} />
+        <OneDexText text={`$${intPart}`} fontSize={48} fontWeight="800" lineHeight={48} />
+        <OneDexText text={`.${fractionPart}`} fontSize={30} fontWeight="800" color="#90A1B9" lineHeight={36} />
       </View>
 
       <View style={changeRowStyle}>
-        <Ionicons name="trending-up" size={12} color="#00BC7D" />
-        <OneDexText text="+0%" color="#00BC7D" marginLeft={6} />
+        <Ionicons name={pnlIsPositive ? "trending-up" : "trending-down"} size={12} color={pnlIsPositive ? "#00BC7D" : "#EF4444"} />
+        <OneDexText text={`${pnlIsPositive ? "+" : ""}${view.pnlPercent.toFixed(2)}%`} color={pnlIsPositive ? "#00BC7D" : "#EF4444"} marginLeft={6} />
         <OneDexText text="Today" color="#62748E" marginLeft={6} />
       </View>
 
