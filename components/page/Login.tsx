@@ -1,8 +1,8 @@
 import React from "react"
-import { Brand } from "@/components/panel/Brand"
-import { LoginButtons } from "@/components/panel/LoginButtons"
-import { LoginEmail } from "@/components/panel/LoginEmail"
-import { LoginPolicy } from "@/components/panel/LoginPolicy"
+import { Brand } from "@/components/panel/info/Brand"
+import { LoginButtons } from "@/components/panel/info/LoginButtons"
+import { LoginEmail } from "@/components/panel/info/LoginEmail"
+import { LoginPolicy } from "@/components/panel/info/LoginPolicy"
 
 type LoginMode = "buttons" | "email"
 

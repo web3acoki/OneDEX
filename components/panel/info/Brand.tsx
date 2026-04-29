@@ -2,7 +2,7 @@ import React from "react"
 import { View, type ViewStyle } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { Ionicons } from "@expo/vector-icons"
-import { OneDexText } from "@/components/content/OneDexText"
+import { OneDexText } from "@/components/content/general/OneDexText"
 
 export function Brand() {
   const wrapStyle: ViewStyle = {

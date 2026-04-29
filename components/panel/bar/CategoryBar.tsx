@@ -1,6 +1,6 @@
 import React from "react"
 import { View, type ViewStyle } from "react-native"
-import { CategoryButton } from "@/components/content/CategoryButton"
+import { CategoryButton } from "@/components/content/general/CategoryButton"
 
 export type ActiveCategory = "All" | "Watchlist"
 
@@ -30,4 +30,3 @@ export function CategoryBar({ active, onChange }: CategoryBarProps) {
     </View>
   </>
 }
-

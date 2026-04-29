@@ -19,7 +19,6 @@ export async function fetchVaultDeposits(user: string): Promise<VaultEquitiesRes
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
   const data = (await response.json()) as VaultEquitiesResponse
-  console.log("[Hyperliquid] userVaultEquities:", data)
   return data
 }
 

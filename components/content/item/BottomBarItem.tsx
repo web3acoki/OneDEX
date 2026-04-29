@@ -1,7 +1,7 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity, View, type ViewStyle } from "react-native";
-import { OneDexText } from "@/components/content/OneDexText";
+import { OneDexText } from "@/components/content/general/OneDexText";
 
 type BottomBarItemProps = {
   label: string;

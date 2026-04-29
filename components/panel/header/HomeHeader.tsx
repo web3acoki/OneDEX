@@ -1,6 +1,6 @@
 import React from "react";
 import { View, type ViewStyle } from "react-native";
-import { HeaderButton } from "@/components/content/HeaderButton";
+import { HeaderButton } from "@/components/content/general/HeaderButton";
 import { showLoginScreen } from "@/services/auth/authScreenStore";
 
 type HomeHeaderProps = {

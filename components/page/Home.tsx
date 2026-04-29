@@ -1,10 +1,10 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, ScrollView, View, type ViewStyle } from "react-native";
-import { OneDexText } from "@/components/content/OneDexText";
-import { HomeHeader } from "@/components/panel/HomeHeader";
-import { Portfolio } from "@/components/panel/Portfolio";
-import { Cards } from "@/components/panel/Cards";
+import { OneDexText } from "@/components/content/general/OneDexText";
+import { HomeHeader } from "@/components/panel/header/HomeHeader";
+import { MarketItems } from "@/components/panel/items/MarketItems";
+import { Portfolio } from "@/components/panel/info/Portfolio";
 import { useWatchlistSymbols } from "@/hooks/useWatchlistSymbols";
 
 type HomeProps = {
@@ -40,9 +40,8 @@ export default function Home({ onJumpToTradeWatchlist, onPressSearch }: HomeProp
           <Ionicons name="chevron-forward" size={20} color="#0F172B" />
         </Pressable>
       </View>
-      <Cards
+      <MarketItems
         symbolFilter={watchlistSymbols}
-        cardMarginTop={8}
       />
     </ScrollView>
   </>

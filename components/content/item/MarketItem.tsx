@@ -1,10 +1,11 @@
 import React from "react"
 import { View, type ViewStyle } from "react-native"
-import { OneDexText } from "@/components/content/OneDexText"
+import { OneDexText } from "@/components/content/general/OneDexText"
 import { type MarketQuote } from "@/services/hyperliquid"
 
 type MarketItemProps = {
   item: MarketQuote
+  isFirst?: boolean
 }
 
 const FULL_NAMES: Record<string, string> = {
@@ -22,7 +23,7 @@ function formatUsd(price: string) {
   return `$${n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
-export function MarketItem({ item }: MarketItemProps) {
+export function MarketItem({ item, isFirst = false }: MarketItemProps) {
   const avatarLetter = item.symbol.slice(0, 1).toUpperCase()
   const title = item.symbol
   const subtitle = getMarketFullName(item.symbol)
@@ -31,10 +32,21 @@ export function MarketItem({ item }: MarketItemProps) {
   const secondaryColor = item.changePct >= 0 ? "#00BC7D" : "#EF4444"
 
   const rowStyle: ViewStyle = {
+    marginTop: isFirst ? 8 : 12,
+    marginHorizontal: 16,
+    minHeight: 74,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#F1F5F9",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    minHeight: 72,
     paddingHorizontal: 16,
   }
 

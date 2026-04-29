@@ -1,8 +1,9 @@
 import React from "react";
 import { ScrollView, type ViewStyle } from "react-native";
-import { Cards } from "@/components/panel/Cards";
-import { TradeHeader } from "@/components/panel/TradeHeader";
-import { CategoryBar, type ActiveCategory } from "@/components/panel/CategoryBar";
+import { MarketItems } from "@/components/panel/items/MarketItems";
+import { PositionItems } from "@/components/panel/items/PositionItems";
+import { TradeHeader } from "@/components/panel/header/TradeHeader";
+import { CategoryBar, type ActiveCategory } from "@/components/panel/bar/CategoryBar";
 import { useWatchlistSymbols } from "@/hooks/useWatchlistSymbols";
 import { getTradeCategory, setTradeCategory, subscribeTradeCategory, type TradeCategory } from "@/services/trade/tradeCategoryStore";
 
@@ -31,8 +32,8 @@ export default function Trade({ onPressSearch }: TradeProps) {
     <ScrollView contentContainerStyle={{ paddingBottom: 16 }}>
       {mainTab === "Markets" ? <CategoryBar active={active} onChange={(next) => setTradeCategory(next as TradeCategory)} /> : null}
       {mainTab === "Positions"
-        ? <Cards mode="positions" />
-        : <Cards symbolFilter={active === "Watchlist" ? watchlistSymbols : undefined} />}
+        ? <PositionItems />
+        : <MarketItems symbolFilter={active === "Watchlist" ? watchlistSymbols : undefined} />}
     </ScrollView>
   </>
 }

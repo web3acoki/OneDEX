@@ -1,8 +1,8 @@
 import React from "react"
 import { usePrivy } from "@privy-io/expo"
 import { View } from "react-native"
-import { OneDexButton } from "@/components/content/OneDexButton"
-import { MenuHeader } from "@/components/panel/MenuHeader"
+import { OneDexButton } from "@/components/content/general/OneDexButton"
+import { MenuHeader } from "@/components/panel/header/MenuHeader"
 import { getHyperliquidNetwork, toggleHyperliquidNetwork } from "@/services/hyperliquid"
 import { resetMarketFeed } from "@/services/hyperliquid/market"
 

@@ -1,10 +1,11 @@
 import React from "react"
 import { useEmbeddedEthereumWallet } from "@privy-io/expo"
 import { Pressable, ScrollView, View, type ViewStyle } from "react-native"
-import { OneDexText } from "@/components/content/OneDexText"
-import { Cards } from "@/components/panel/Cards"
-import { Portfolio } from "@/components/panel/Portfolio"
-import { WalletHeader } from "@/components/panel/WalletHeader"
+import { OneDexText } from "@/components/content/general/OneDexText"
+import { BalanceItems } from "@/components/panel/items/BalanceItems"
+import { PositionItems } from "@/components/panel/items/PositionItems"
+import { Portfolio } from "@/components/panel/info/Portfolio"
+import { WalletHeader } from "@/components/panel/header/WalletHeader"
 import { fetchClearinghouseState, fetchHistoricalOrders, fetchSpotClearinghouseState, fetchVaultDeposits } from "@/services/hyperliquid"
 
 export default function Wallet() {
@@ -54,7 +55,7 @@ export default function Wallet() {
           <OneDexText text="Orders" fontSize={18} fontWeight="700" color={active === "Orders" ? "#0F172B" : "#90A1B9"} lineHeight={28} />
         </Pressable>
       </View>
-      {active === "Balances" ? <Cards mode="balances" cardMarginTop={8} /> : active === "Positions" ? <Cards mode="positions" cardMarginTop={8} /> : null}
+      {active === "Balances" ? <BalanceItems /> : active === "Positions" ? <PositionItems /> : null}
       <View style={spacerStyle} />
     </ScrollView>
   </>

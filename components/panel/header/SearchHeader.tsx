@@ -1,7 +1,7 @@
 import React from "react"
 import { View, type ViewStyle } from "react-native"
-import { OneDexText } from "@/components/content/OneDexText"
-import { HeaderButton } from "@/components/content/HeaderButton"
+import { OneDexText } from "@/components/content/general/OneDexText"
+import { HeaderButton } from "@/components/content/general/HeaderButton"
 
 type SearchHeaderProps = {
   onBack: () => void

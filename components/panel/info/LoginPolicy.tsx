@@ -1,6 +1,6 @@
 import React from "react"
 import { View, type ViewStyle } from "react-native"
-import { OneDexText } from "@/components/content/OneDexText"
+import { OneDexText } from "@/components/content/general/OneDexText"
 
 const policyWrapStyle: ViewStyle = {
   //marginTop: 0,

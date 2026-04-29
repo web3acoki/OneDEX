@@ -1,6 +1,6 @@
 import React from "react"
 import { View, type ViewStyle } from "react-native"
-import { OneDexButton } from "@/components/content/OneDexButton"
+import { OneDexButton } from "@/components/content/general/OneDexButton"
 import { useLoginMode } from "@/components/page/Login"
 
 export function LoginButtons() {

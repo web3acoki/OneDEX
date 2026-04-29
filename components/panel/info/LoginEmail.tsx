@@ -1,9 +1,9 @@
 import React from "react"
 import { View, type ViewStyle } from "react-native"
 import { useLoginWithEmail } from "@privy-io/expo"
-import { OneDexText } from "@/components/content/OneDexText"
-import { OneDexButton } from "@/components/content/OneDexButton"
-import { OneDexInput } from "@/components/content/OneDexInput"
+import { OneDexText } from "@/components/content/general/OneDexText"
+import { OneDexButton } from "@/components/content/general/OneDexButton"
+import { OneDexInput } from "@/components/content/general/OneDexInput"
 import { useLoginMode } from "@/components/page/Login"
 
 export function LoginEmail() {

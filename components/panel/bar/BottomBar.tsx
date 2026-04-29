@@ -1,6 +1,6 @@
 import React from "react";
 import { View, type ViewStyle } from "react-native";
-import { BottomBarItem } from "@/components/content/BottomBarItem";
+import { BottomBarItem } from "@/components/content/item/BottomBarItem";
 
 type TabKey = "home" | "trade" | "strategy" | "wallet";
 

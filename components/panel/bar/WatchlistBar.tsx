@@ -1,13 +1,13 @@
 import React from "react"
 import { TouchableOpacity, View, type ViewStyle } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
-import { OneDexText } from "@/components/content/OneDexText"
+import { OneDexText } from "@/components/content/general/OneDexText"
 
-type WatchlistShortcutBarProps = {
+type WatchlistBarProps = {
   onPressRightArrow: () => void
 }
 
-export function WatchlistShortcutBar({ onPressRightArrow }: WatchlistShortcutBarProps) {
+export function WatchlistBar({ onPressRightArrow }: WatchlistBarProps) {
   const barStyle: ViewStyle = {
     marginTop: 16,
     marginHorizontal: 24,

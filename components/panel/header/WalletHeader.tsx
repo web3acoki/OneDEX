@@ -3,8 +3,8 @@ import { useEmbeddedEthereumWallet } from "@privy-io/expo"
 import * as Clipboard from "expo-clipboard"
 import { Ionicons } from "@expo/vector-icons"
 import { Pressable, View, type ViewStyle } from "react-native"
-import { OneDexText } from "@/components/content/OneDexText"
-import { HeaderButton } from "@/components/content/HeaderButton"
+import { OneDexText } from "@/components/content/general/OneDexText"
+import { HeaderButton } from "@/components/content/general/HeaderButton"
 import { showLoginScreen } from "@/services/auth/authScreenStore"
 
 export function WalletHeader() {

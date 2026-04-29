@@ -65,7 +65,6 @@ export async function fetchClearinghouseState(user: string): Promise<Clearinghou
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
   const data = (await response.json()) as ClearinghouseStateResponse
-  console.log("[Hyperliquid] clearinghouseState:", data)
   return data
 }
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { View, type ViewStyle } from "react-native";
-import { OneDexButton } from "@/components/content/OneDexButton";
-import { OneDexText } from "@/components/content/OneDexText";
+import { OneDexButton } from "@/components/content/general/OneDexButton";
+import { OneDexText } from "@/components/content/general/OneDexText";
 import { useEmbeddedEthereumWallet } from "@privy-io/expo";
 import { fetchPortfolioView, getPortfolioView } from "@/services/hyperliquid";
 

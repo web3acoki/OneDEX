@@ -1,6 +1,6 @@
 import React from "react"
 import { TouchableOpacity, type ViewStyle } from "react-native"
-import { OneDexText } from "@/components/content/OneDexText"
+import { OneDexText } from "@/components/content/general/OneDexText"
 
 type CategoryButtonProps = {
   label: "All" | "Watchlist"

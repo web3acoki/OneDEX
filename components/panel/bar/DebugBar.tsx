@@ -1,11 +1,11 @@
 import React from "react";
 import { View, type ViewStyle } from "react-native";
-import { OneDexText } from "@/components/content/OneDexText";
+import { OneDexText } from "@/components/content/general/OneDexText";
 import { usePrivy } from "@privy-io/expo";
 
 export function DebugBar() {
   const { isReady, user } = usePrivy();
-  const version = "v0.0.65";
+  const version = "v0.0.86";
   const debugMode = true;
 
   const style: ViewStyle = {

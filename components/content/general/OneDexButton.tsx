@@ -1,7 +1,7 @@
 import React from "react";
 import { GestureResponderEvent, TouchableOpacity, View, type ViewStyle } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { OneDexText } from "@/components/content/OneDexText";
+import { OneDexText } from "@/components/content/general/OneDexText";
 
 type OneDexButtonProps = {
   label: string;

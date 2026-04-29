@@ -1,7 +1,7 @@
 import React from "react"
 import { View, type ViewStyle } from "react-native"
 import { loadWatchlistSymbols, saveWatchlistSymbols, DEFAULT_WATCHLIST_SYMBOLS } from "@/services/watchlist"
-import { HeaderButton } from "@/components/content/HeaderButton"
+import { HeaderButton } from "@/components/content/general/HeaderButton"
 
 type MarketHeaderProps = {
   symbol: string

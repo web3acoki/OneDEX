@@ -19,7 +19,6 @@ export async function fetchHistoricalOrders(user: string): Promise<HistoricalOrd
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
   const data = (await response.json()) as HistoricalOrderResponse
-  console.log("[Hyperliquid] historicalOrders:", data)
   return data
 }
 

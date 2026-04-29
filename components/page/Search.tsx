@@ -1,8 +1,8 @@
 import React from "react"
 import { ScrollView, View, type ViewStyle } from "react-native"
-import { SearchHeader } from "@/components/panel/SearchHeader"
-import { OneDexInput } from "@/components/content/OneDexInput"
-import { Cards } from "@/components/panel/Cards"
+import { SearchHeader } from "@/components/panel/header/SearchHeader"
+import { OneDexInput } from "@/components/content/general/OneDexInput"
+import { MarketItems } from "@/components/panel/items/MarketItems"
 
 type SearchProps = {
   onBack: () => void
@@ -24,7 +24,7 @@ export default function Search({ onBack }: SearchProps) {
       <View style={inputWrapStyle}>
         <OneDexInput value={keyword} onChangeText={setKeyword} placeholder="Search market" inputMode="text"/>
       </View>
-      <Cards query={keyword} useAllMarkets={isSearching} cardMarginTop={16} />
+      <MarketItems query={keyword} useAllMarkets={isSearching} />
     </ScrollView>
   </>
 }

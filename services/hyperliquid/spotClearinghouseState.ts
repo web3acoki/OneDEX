@@ -29,7 +29,6 @@ export async function fetchSpotClearinghouseState(user: string): Promise<SpotCle
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
 
   const data = (await response.json()) as SpotClearinghouseStateResponse
-  console.log("[Hyperliquid] spotClearinghouseState:", data)
   return data
 }
 
